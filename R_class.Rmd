@@ -22,9 +22,16 @@ cat <- c
 
 ```{r}
 `2019 budget`<- 100
+aoo <- 5L
 ```
 
 ```{r}
 class(a)
+class(aoo)
+```
+```{r}
+aVector <- c(2,4,8)
+a2vector <- c(2L,4L,8L)
+class(a2vector)
 ```
 
