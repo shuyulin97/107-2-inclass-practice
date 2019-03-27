@@ -134,5 +134,6 @@ x2 == y2
 
 ```{r}
 is.na(x2)
+sum(x2, na.rm = TRUE)
 ```
 
