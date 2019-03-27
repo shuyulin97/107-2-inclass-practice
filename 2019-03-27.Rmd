@@ -81,11 +81,25 @@ typeof(twDateTime)
 ```
 ```{r}
 DateTime1 <- ymd("2012-03-19")
-DateTime2 <- ymd("2019-03-24")
+DateTime2 <- ymd("2019-03-27")
 DateTime2-DateTime1
 as.double(DateTime2-DateTime1)
+as.integer(DateTime2 - DateTime1)
 DateTime1 + years(7)
 DateTime1 + 365
 DateTime1 + dyears(7)
+```
+
+```{r}
+x <- 5
+y <- 7
+x2 <- c(1,5,10)
+y2 <- c(-1,5,20)
+x != y
+x >= y2
+z = x
+z == x
+x2 < y2
+y2+x
 ```
 
