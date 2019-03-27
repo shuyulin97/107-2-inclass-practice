@@ -9,3 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+twDateTime <- ymd_hms("2019-03-18 14:04:00", tz="Asia/Taipei")
+LisbonDateTime <- with_tz(twDateTime,tz="Europe/Lisbon")
+```
+
+
+```{r}
+typeof(LisbonDateTime)
+as.double(LisbonDateTime)
+as.double(twDateTime)
+```
+
