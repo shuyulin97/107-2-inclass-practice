@@ -17,7 +17,23 @@ LisbonDateTime <- with_tz(twDateTime,tz="Europe/Lisbon")
 
 ```{r}
 typeof(LisbonDateTime)
-as.double(LisbonDateTime)
-as.double(twDateTime)
+as.integer(LisbonDateTime)
+as.integer(twDateTime)
+```
+```{r}
+twDateTime <- ymd_hms("2019-03-19 13:00:00", tz="Asia/Taipei")
+LisbonDateTime <- with_tz(twDateTime,tz="Europe/Lisbon")
+```
+
+```{r}
+typeof(LisbonDateTime)
+as.integer(LisbonDateTime)
+as.integer(twDateTime)
+```
+
+```{r}
+twDT <- ymd_hms("2019-03-14 08:18:47",tz="Asia/Taipei")
+nowtime <- mdy("March,3 2019",tz="Asia/Taipei")
+nowtime2 <- ymd("2018-09-11",tz="Asia/Taipei")
 ```
 
