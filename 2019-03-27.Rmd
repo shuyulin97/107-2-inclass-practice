@@ -37,3 +37,15 @@ nowtime <- mdy("March,3 2019",tz="Asia/Taipei")
 nowtime2 <- ymd("2018-09-11",tz="Asia/Taipei")
 ```
 
+```{r}
+typeof(nowtime)
+as.double(nowtime)
+```
+
+```{r}
+ymd("2012-03-19")
+as.integer(ymd("2017-09-08")) 
+as.integer(ymd("2019-03-19")) 
+```
+
+
