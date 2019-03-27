@@ -47,5 +47,45 @@ ymd("2012-03-19")
 as.integer(ymd("2017-09-08")) 
 as.integer(ymd("2019-03-19")) 
 ```
+```{r}
+aL <- c(1L, 5L, -3L)
+bL <- c(-2L, -4L, 8L)
+aL+bL
+```
 
+```{r}
+a <- c(1, 5, -3)
+b <- c(0.5, 12, 2)
+a+bL
+a*bL
+class(aL*b)
+class(aL/b)
+```
+```{r}
+as.integer(a)
+typeof(a)
+typeof(aL)
+levels(aL)
+sum(aL)
+```
+
+```{r}
+a+4
+a^2
+typeof(a)
+typeof(b)
+```
+```{r}
+twDateTime+3600
+typeof(twDateTime)
+```
+```{r}
+DateTime1 <- ymd("2012-03-19")
+DateTime2 <- ymd("2019-03-24")
+DateTime2-DateTime1
+as.double(DateTime2-DateTime1)
+DateTime1 + years(7)
+DateTime1 + 365
+DateTime1 + dyears(7)
+```
 
