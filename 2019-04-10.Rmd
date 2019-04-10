@@ -109,7 +109,22 @@ mon<-as.character(mon)
 str_c(cen_year,"年",mon,"月")
 ```
 
+```{r}
+aWithNames <- c(
+  susan=1,
+  tony=2,
+  anita=3
+)
+typeof(a)
+aWithNames
+```
 
+```{r}
+b2<-list(
+  first="a",
+  second="b",
+  third=c(1:10))
+```
 
 
 
