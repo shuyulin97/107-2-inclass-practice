@@ -38,11 +38,130 @@ currency <- exData2$幣別
 class(currency)
 ```
 
+```{r}
+currency <- as.factor(currency)
+class(currency)
+levels(currency)
+```
 
 ```{r}
 head(currency)
 ```
 ```{r}
 levels(currency)
+```
+```{r}
+length(levels(currency))
+```
+```{r}
+currency2 <- c("日圓","美元","日圓")
+sum(currency2 == "日圓")
+```
+
+```{r}
+sum(currency == "日圓JPY/USD")
+```
+#5.4
+```{r}
+x5 <- c("台北市","新北市","高雄市")
+greatTaipei <- c("台北市","新北市")
+
+x5 %in% greatTaipei
+!(x5 %in% greatTaipei)
+```
+
+```{r}
+y5 <- c("女","男","女")
+
+y5
+y5=="女"
+!(y5=="女")
+```
+#圈圈是要圈出"論述為真的元素位置
+
+#圈出大台北且是女生(同時成立and)
+```{r}
+x5 %in% greatTaipei
+y5=="女"
+(x5 %in% greatTaipei) & (y5=="女")
+which((x5 %in% greatTaipei) & (y5=="女")) #請問第幾筆資料符合這條件
+```
+
+#圈出大台北或者是女生(or)
+```{r}
+x5 %in% greatTaipei
+y5=="女"
+(x5 %in% greatTaipei) | (y5=="女")
+which((x5 %in% greatTaipei) | (y5=="女"))
+```
+
+```{r}
+x5 %in% greatTaipei
+y5=="女"
+xor(x5 %in% greatTaipei, y5=="女")
+which(xor(x5 %in% greatTaipei, y5=="女"))
+```
+
+
+
+```{r}
+library(readr)
+exData2 <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/exData2.csv")
+date <- as.character(exData2$期間)
+currency <- exData2$幣別
+exchangeRate <- exData2$匯率
+```
+
+```{r}
+library(lubridate)
+date <- ymd(date)
+class(date)
+```
+
+```{r}
+isafter19080801 <- date <= ymd("1980-08-01")
+head(isafter19080801)
+sum(isafter19080801)
+```
+
+```{r}
+as.integer(ymd("1980-08-01"))
+head(date >= ymd("1980-08-01"))
+```
+
+```{r}
+currency3 <- currency == "歐元USD/EUR"
+sum(currency3)
+sum(currency == "歐元USD/EUR")
+```
+
+```{r}
+sum(is.na(exchangeRate))
+```
+
+```{r}
+exchangeRate1 <- !is.na(exchangeRate)
+sum(exchangeRate1 & (currency == "歐元USD/EUR"))
+sum(!is.na(exchangeRate) & (currency == "歐元USD/EUR"))
+```
+```{r}
+library(readr)
+transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
+courseType <- transcriptDataFinal$`必選修類別（必∕選∕通）`
+major <- transcriptDataFinal$學系
+studentID <- transcriptDataFinal$學號
+grade <- transcriptDataFinal$學期成績
+```
+```{r}
+sum(major == "經濟學系")
+sum(studentID == "5bdS6977b")
+sum(studentID == "5bdS6977b" & grade >= 60)
+sum(major == "經濟學系" & courseType == "選")
+sum(major == "經濟學系" & grade < 60)/sum(major == "經濟學系" & courseType == "必")
+```
+```{r}
+step1 <- major == "經濟學系" & courseType == "必"
+step2 <- grade < 60
+sum(step1 & step2)/sum(step1)
 ```
 
