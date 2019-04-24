@@ -1,0 +1,44 @@
+---
+title: "Untitled"
+author: "ShuYu"
+date: "2019年4月24日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+vec <- c(1:6)
+vec
+```
+```{r}
+Mat1 <- matrix(
+  c(1:6),2,3
+)
+Mat1
+```
+
+```{r}
+Mat2 <- matrix(
+  c("a", "b", "c", "d"), 2, 2 #r只看c的位置(還是vector)，matrix只是告訴他長的像矩陣
+)
+Mat2
+class(Mat2)
+```
+
+```{r}
+Mat1
+Mat1[[2]]
+Mat1[[6]]
+```
+
+```{r}
+Mat2
+Mat2[[4]]
+```
+
+
+
+
