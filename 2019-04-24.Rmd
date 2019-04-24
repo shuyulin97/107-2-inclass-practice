@@ -95,4 +95,35 @@ as.data.frame(StuList,stringsAsFactors = F) -> StuDF4
 class(StuDF4)
 StuDF4
 ```
+```{r}
+chosenLETTERS <- letters[1:20]
+matObj1 <- matrix(chosenLETTERS,5,4) #產生matrix幻覺
+matObj1
+matObj1[[8]]
+matObj1[c(3,2),c(2,3)]
+matObj1[c(F, T, T, F, F), c(F, T, T, F)]
+```
+
+```{r}
+library(readr)
+classSurvey <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/classSurvey.csv")
+```
+
+```{r}
+#ㄧ次取出性別&本學期學分數
+classSurvey[c(1:60),c(4,5)]
+classSurvey[,c(4,5)]
+classSurvey[c("性別","本學期學分數")]
+```
+
+
+
+
+
+
+
+
+
+
+
 
