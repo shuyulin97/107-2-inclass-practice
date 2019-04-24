@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+a <- 1+2
+a
 vec <- c(1:6)
 vec
 ```
@@ -22,10 +24,11 @@ Mat1
 
 ```{r}
 Mat2 <- matrix(
-  c("a", "b", "c", "d"), 2, 2 #r只看c的位置(還是vector)，matrix只是告訴他長的像矩陣
+  c("a", "b", "c", "d"), 2, 2 #r只看c的位置(還是vector)，matrix只是告訴他長的像矩陣(方形的視覺幻覺)
 )
 Mat2
 class(Mat2)
+typeof(Mat2)
 ```
 
 ```{r}
@@ -37,8 +40,59 @@ Mat1[[6]]
 ```{r}
 Mat2
 Mat2[[4]]
+Mat2[c(T, F, F ,T)] #跟他說第幾個要第幾個要取第幾個不要
+Mat2[c(1,4)]
+```
+```{r}
+StuDF <- data.frame(StuID=c(1,2,3,4,5), ##欄位名稱=欄位值
+                  name=c("小明","大雄","胖虎","小新","大白"),
+                  score=c(80,60,90,70,50))
+StuDF 
 ```
 
 
+```{r}
+class(StuDF)
+typeof(StuDF)
+```
+```{r}
+StuDF
+StuDF[[2]][[3]] 
+#show出leveis：以dataframe創造character欄位時，遇到變數輸入為character會自動轉成factor
+```
 
+```{r}
+StuDF$name <- as.character(StuDF$name)
+class(StuDF$name)
+```
+
+```{r}
+StuDF2 <- data.frame(
+  學號=c(172,214,322,425,517),
+  姓名=c("小明","大雄","胖虎","小新","大白"),
+  成績=c(80,60,90,70,50),
+  stringsAsFactors = FALSE
+  )
+StuDF2 
+```
+
+```{r}
+StuList <- list(
+  學號=c(172,214,322,425,517),
+  姓名=c("小明","大雄","胖虎","小新","大白"),
+  成績=c(80,60,90,70,50)
+  )
+StuList 
+```
+
+```{r}
+StuDF3 <- as.data.frame(StuList)
+class(StuDF3)
+StuDF3
+```
+```{r}
+as.data.frame(StuList,stringsAsFactors = F) -> StuDF4
+class(StuDF4)
+StuDF4
+```
 
