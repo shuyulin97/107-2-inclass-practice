@@ -47,10 +47,17 @@ twDates
 #an5.1:也可以用以下寫法str_replace_all更快
 請將twDates中的"民國"及"月"都去除，並存在twDates2答案物件，如："民國099年2月"會變成"099年2"。
 ```{r}
-twDates2 <- str_replace_all(twDates,"(民國)|(月)","")
+#faster
+twDatesf <- str_replace_all(twDates,"(民國)|(月)","")
+twDatesf
+
+#original
+twDates1 <- str_replace(twDates, "民國", "") 
+twDates2 <- str_replace(twDates1, "月", "")
+twDates2
 ```
 
-#ans5.3:萬一順序不一樣不能慢慢數str_sub
+#ans5.3:萬一順序不一樣不能慢慢數str_sub，先str_split拆開來
 ```{r}
 #tip
 datesplit <- str_split(twDates2, "年") #拆開來
@@ -87,6 +94,92 @@ load("C:/Users/user/Desktop/R/midterm/sampledTranscriptData.Rda")
 names(sampledTranscriptData) <- 
   c('學號','學期成績','學分數','學年','學期','必選修類別（必／選／通）','系級','科目名稱','年級','學屆')
 ```
+#7.1:要注意分母到底是要用用哪筆資料/數字
+取出科目名稱為「科目204」的學期成績，計算該科的當人比例（子樣本中成績不及格的比例）將此值存在答案物件failRate裡（為numeric/double class）。
+```{r}
+#correction
+subject <- sampledTranscriptData[[8]]=="科目204"
+length(subject)
+sum(subject)
+fail <- sampledTranscriptData[[2]] < 60
+fail204 <- subject&fail
+failRate <- sum(fail204)/sum(subject) #要用sum不是length，因為分母只要看科目204不是全部科目
+failRate
+
+#teacher
+(sampledTranscriptData$科目名稱 == "科目204") -> chosenSubjectLogi
+sampledTranscriptData$學期成績[chosenSubjectLogi] -> chosenGrades
+sum(chosenGrades<60)/length(chosenGrades) -> failRateT
+
+failRateT
+
+#wrong(original)
+subjectW <- sampledTranscriptData[[8]]=="科目204"
+head(subjectW)
+length(subjectW)
+failW <- sampledTranscriptData[[2]] < 60
+head(failW)
+fail204 <- subjectW & failW
+head(fail204)
+sum(fail204)
+failRateW <- sum(fail204)/length(subject) #這裡要用sum不是length
+class(failRate)
+failRateW
+
+```
+
+#7.3
+請在sampledTranscriptData新增一個「學系」變數，存在`sampledTranscriptData$學系`答案物件裡，它是「系級」元素值去除數字1,2,3,4的結果。例如：系級為"經濟學系2", 學系值即為"經濟學系"。（hint: 可透過`str_replace()`或`str_replace_all()`把字串中的數字去除。）
+#faster:1234一起拿掉
+```{r}
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData[[7]], "[1234]", "")
+sampledTranscriptData$學系
+```
+#faster:全部數字拿掉
+```{r}
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData[[7]], "[:digit:]", "")
+sampledTranscriptData$學系
+```
+#original
+```{r}
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData[[7]], "1", "")
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$學系, "2", "")
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$學系, "3", "")
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$學系, "4", "")
+sampledTranscriptData$學系
+```
+
+#7.4
+學號是一入學就決定，不管後來有沒有轉系。 請找出外系轉入經濟系的學生學號，並存成changeMajorStudent答案物件。(由於資料一筆為一科成績，所以學號會重覆出現，要存入答案物件前請用`unique()`去除重覆學號)
+```{r}
+#前置作業7.2產生系碼
+sampledTranscriptData$學屆 <- str_sub(sampledTranscriptData[[1]], 2, 4)
+sampledTranscriptData$系碼 <- str_sub(sampledTranscriptData[[1]], 5, 6)
+head(sampledTranscriptData)
+```
+
+```{r}
+NOT <- sampledTranscriptData$系碼 != 73
+changeMajorStudent <- sampledTranscriptData[[1]][NOT]
+changeMajorStudent <- unique(changeMajorStudent)
+head(changeMajorStudent) 
+
+```
+
+```{r}
+(sampledTranscriptData$系碼!="73" & 
+   sampledTranscriptData$學系=="經濟學系") -> logiCheck
+sampledTranscriptData$學號[logiCheck] %>% unique() -> changeMajorStudent
+
+changeMajorStudent
+```
+
+
+
+
+
+
+
 
 
 
