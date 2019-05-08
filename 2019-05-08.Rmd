@@ -1,0 +1,35 @@
+---
+title: '2019-05-08'
+author: "ShuYu"
+date: "2019年5月8日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#ans1要轉成數字才能和數字比較
+```{r}
+logicBig <- (as.integer(x) > 50)
+
+logicBig
+```
+
+#ans3要記得as.character轉成字串物件
+```{r}
+load("submitTime.Rda")
+mdy_hms(submitTime)-> submitTime1
+with_tz(submitTime1,tzone = "America/New_York") -> nyTime
+as.character(nyTime) -> nyTime 
+nyTime
+```
+
+
+
+
+
+
+
+
+

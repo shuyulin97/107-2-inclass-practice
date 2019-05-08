@@ -143,6 +143,7 @@ sum(is.na(exchangeRate))
 exchangeRate1 <- !is.na(exchangeRate)
 sum(exchangeRate1 & (currency == "歐元USD/EUR"))
 sum(!is.na(exchangeRate) & (currency == "歐元USD/EUR"))
+sum(currency == "歐元USD/EUR", na.rm = T)
 ```
 ```{r}
 library(readr)

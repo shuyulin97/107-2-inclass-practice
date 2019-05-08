@@ -134,6 +134,7 @@ table(allVotes) # 計算每個類別的次數
 
 logiCorrect <- str_length(birthday) == 8
 favoriteTwo[logiCorrect] -> validfaforite2 #favorite2中選符合logicorrect的
+head(favoriteTwo)
 head(validfaforite2)
 ```
 
