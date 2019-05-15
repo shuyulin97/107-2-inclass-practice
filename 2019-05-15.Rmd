@@ -1,0 +1,80 @@
+---
+title: "Untitled"
+author: "ShuYu"
+date: "2019年5月15日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+Vector1 <- letters[1:6]
+Vector1
+
+names(Vector1)
+```
+
+```{r}
+names(Vector1) <- c('名稱1','名稱2','名稱3','名稱4','名稱5','名稱6')
+names(Vector1)
+```
+
+```{r}
+names(Mat1) <- letters[1:6]
+names(Mat1)
+```
+
+```{r}
+matObj1
+```
+
+```{r}
+colnames(matObj1) 
+rownames(matObj1)
+```
+```{r}
+colnames(matObj1) <-c('欄位1','欄位2','欄位3','欄位4')
+colnames(matObj1)
+matObj1
+```
+```{r}
+rownames(matObj1) <- c('行：1','行：2','行：3','行：4','行：5')
+matObj1
+```
+```{r}
+a <- c("1","b","TRUE")
+a
+a[[2]] <- "c" # 元素存在
+a[[5]] <- "7" # 元素不存在，判定為新創立一個元素
+a
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
