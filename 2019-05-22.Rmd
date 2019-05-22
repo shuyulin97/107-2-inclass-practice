@@ -78,6 +78,7 @@ str_c("民國",str_pad(yy,3,"left","0"),"年",mm,"月") -> twDates
 twDates
 ```
 
+#把民國年月轉成需元年月的寫法
 ```{r}
 #查string_r cheatsheet p.2 
 
@@ -87,15 +88,50 @@ library(stringr); library(lubridate)
 #幫我把twDate"民國"後面的數字們
 yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911 
 #幫我取出taDate"月"之前的數字們
-mm<-str_extract(twDates,"[:digit:]+(?=月)")'
+mm<-str_extract(twDates,"[:digit:]+(?=月)")
 #組合在一起後變成datetime
 yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
 ```
 
+#請寫一個函數其名稱為date_convert_twYM，且date_convert_twYM(x)可以把一個民國年月字串物件x轉成date time class的西元年月日物件輸出
+```{r}
+date_convert_twYM <- function(twdate){
+  yyyy<-as.integer(str_extract(twdate,"(?<=(民國))[:digit:]+"))+1911 
+  mm<-str_extract(twdate,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  
+  return(yyyymmdd)
+}
 
+date_convert_twYM("民國108年5月")
+date_convert_twYM(twDates)
+```
 
+```{r}
+utility_cobb_douglass2 <- function(x,y,.alpha=0.5,.beta=0.5){
+  utilValue <- x^.alpha*y^.beta
+  return(utilValue)
+}
+```
 
+```{r}
+utility_cobb_douglass2(1,2) # 使用預設值
+utility_cobb_douglass2(1,2,0.5,0.8) # 自定參數值
+```
 
+#使用預設值
+```{r}
+date_convert_twYM <- function(twdate, day=01){
+  yyyy<-as.integer(str_extract(twdate,"(?<=(民國))[:digit:]+"))+1911 
+  mm<-str_extract(twdate,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,day,sep="-"))
+  
+  return(yyyymmdd)
+}
+
+date_convert_twYM("民國108年5月", 31)
+date_convert_twYM(twDates, 04)
+```
 
 
 
