@@ -98,7 +98,7 @@ yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
 date_convert_twYM <- function(twdate){
   yyyy<-as.integer(str_extract(twdate,"(?<=(民國))[:digit:]+"))+1911 
   mm<-str_extract(twdate,"[:digit:]+(?=月)")
-  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-")) 
   
   return(yyyymmdd)
 }
@@ -121,7 +121,7 @@ utility_cobb_douglass2(1,2,0.5,0.8) # 自定參數值
 
 #使用預設值
 ```{r}
-date_convert_twYM <- function(twdate, day=01){
+date_convert_twYM <- function(twdate, day="01"){              #日期有預設值，類別為character，如果只寫01，input就是numeric
   yyyy<-as.integer(str_extract(twdate,"(?<=(民國))[:digit:]+"))+1911 
   mm<-str_extract(twdate,"[:digit:]+(?=月)")
   yyyymmdd <- ymd(str_c(yyyy,mm,day,sep="-"))
@@ -129,8 +129,8 @@ date_convert_twYM <- function(twdate, day=01){
   return(yyyymmdd)
 }
 
-date_convert_twYM("民國108年5月", 31)
-date_convert_twYM(twDates, 04)
+date_convert_twYM("民國108年5月")
+date_convert_twYM(twDates, "04")
 ```
 
 
