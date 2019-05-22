@@ -27,26 +27,7 @@ nytime <- ymd_hms(invoiceList$訂單時區之下單時間[nylogic], tz="America/
 invoiceList$UTC時間[nylogic] <- with_tz(nytime, tzone ="UTC")
 invoiceList
 ```
-```{r}
-(invoiceList$訂單時區=="America/New_York") -> nyLogical
-(invoiceList$訂單時區=="Asia/Taipei") -> tpLogical
 
-invoiceList$nyLogical <- nyLogical
-invoiceList$tpLogical <- tpLogical
-
-ymd_hms(invoiceList$`訂單時區之下單時間`[nyLogical],
-          tz="America/New_York") -> nyDateTime
-
-invoiceList$UTC時間[nyLogical] <-
-  with_tz(nyDateTime,tzone="UTC")
-
-ymd_hms(invoiceList$`訂單時區之下單時間`[tpLogical],
-          tz="Asia/Taipei") -> tpDateTime
-invoiceList$UTC時間[tpLogical] <-
-  with_tz(tpDateTime,tzone="UTC")
-
-invoiceList
-```
 ```{r}
 library(readr)
 transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
@@ -75,6 +56,8 @@ nytime2 <- ymd_hms("1973-02-21 12:05:22", tz="America/New_York")
 nytime3 <- with_tz(nytime2, tzone = "Asia/Taipei")
 nytime3
 ```
+
+#用function表達
 ```{r}
 ymd_hms_tzChange <- function(input, fromTzone, toTzone){
   time1 <- ymd_hms(input, tz=fromTzone )
@@ -87,6 +70,27 @@ ymd_hms_tzChange(invoiceList$`訂單時區之下單時間`[tplogic], "Asia/Taipe
 ```
 
 
+```{r}
+library(stringr)
+sample(99:103,15,replace = T)-> yy
+sample(1:12,15,replace=T)-> mm
+str_c("民國",str_pad(yy,3,"left","0"),"年",mm,"月") -> twDates
+twDates
+```
+
+```{r}
+#查string_r cheatsheet p.2 
+
+library(stringr); library(lubridate)
+#regular expression 民國可以換成任何字眼(前面都是__)
+# +號：__們
+#幫我把twDate"民國"後面的數字們
+yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911 
+#幫我取出taDate"月"之前的數字們
+mm<-str_extract(twDates,"[:digit:]+(?=月)")'
+#組合在一起後變成datetime
+yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+```
 
 
 
