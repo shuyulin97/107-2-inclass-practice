@@ -9,22 +9,108 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+library(readr)
+invoiceList <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/invoiceList.csv",
+col_types = cols(訂單時間.以訂單時區顯示. = col_character()))
+names(invoiceList)[[2]] <- "訂單時區之下單時間"
 ```
 
-## Including Plots
+#midterm 6.2
+```{r}
+library(lubridate)
+tplogic <- invoiceList$訂單時區=="Asia/Taipei"
+nylogic <- invoiceList$訂單時區=="America/New_York"
+tptime <- ymd_hms(invoiceList$訂單時區之下單時間[tplogic], tz="Asia/Taipei" )
+invoiceList$UTC時間[tplogic] <- with_tz(tptime, tzone ="UTC")
+nytime <- ymd_hms(invoiceList$訂單時區之下單時間[nylogic], tz="America/New_York" )
+invoiceList$UTC時間[nylogic] <- with_tz(nytime, tzone ="UTC")
+invoiceList
+```
+```{r}
+(invoiceList$訂單時區=="America/New_York") -> nyLogical
+(invoiceList$訂單時區=="Asia/Taipei") -> tpLogical
 
-You can also embed plots, for example:
+invoiceList$nyLogical <- nyLogical
+invoiceList$tpLogical <- tpLogical
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+ymd_hms(invoiceList$`訂單時區之下單時間`[nyLogical],
+          tz="America/New_York") -> nyDateTime
+
+invoiceList$UTC時間[nyLogical] <-
+  with_tz(nyDateTime,tzone="UTC")
+
+ymd_hms(invoiceList$`訂單時區之下單時間`[tpLogical],
+          tz="Asia/Taipei") -> tpDateTime
+invoiceList$UTC時間[tpLogical] <-
+  with_tz(tpDateTime,tzone="UTC")
+
+invoiceList
+```
+```{r}
+library(readr)
+transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+gpa_fun <- function(studentID){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+  
+  subSample <- transcriptDataFinal[logiChosenStudent,]
+  
+  sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+  return(GPA)
+}
+```
+```{r}
+gpa_fun("479W9ee8e")
+gpa_fun("9efW9aea5")
+```
+
+
+#請把以America/New_York時區輸入的時間字串"1973-02-21 12:05:22"，轉成date time class, 再改成Asia/Taipei時間顯示
+```{r}
+nytime2 <- ymd_hms("1973-02-21 12:05:22", tz="America/New_York")
+nytime3 <- with_tz(nytime2, tzone = "Asia/Taipei")
+nytime3
+```
+```{r}
+ymd_hms_tzChange <- function(input, fromTzone, toTzone){
+  time1 <- ymd_hms(input, tz=fromTzone )
+  finaltime <- with_tz(time1, tzone = toTzone )
+  return(finaltime)
+}
+
+ymd_hms_tzChange("2019-05-22 16:05:30", "Asia/Taipei", "America/New_York")
+ymd_hms_tzChange(invoiceList$`訂單時區之下單時間`[tplogic], "Asia/Taipei", "UTC")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
