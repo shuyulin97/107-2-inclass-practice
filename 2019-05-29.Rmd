@@ -167,7 +167,7 @@ gpa_fun <- function(studentID){
 }
 ```
 
-#多個條件判斷
+#多個條件判斷 ref: R for data sience ch19
 ```{r}
 a <- readline(prompt = "請輸入一個數字： ")
 if(a==1) {
@@ -180,6 +180,97 @@ if(a==1) {
   print("你輸入了其他數字")
 }
 ```
+
+```{r}
+supply_fun4 <- function(P,a,b){
+  Qs <- a+b*P
+  if(P < 0) {
+    message("P不能為負值") # 在螢幕出現的「錯誤」提示，沒有輸出任何值
+  } else if(P < -a/b) {
+    message("P必需大於等於",-a/b,"(即-a/b值)")
+  } else {
+    return(Qs)
+  }
+}
+supply_fun4(P=-1,-3,1) #p不能<0
+supply_fun4(P=2,-3,1)  #p不能<3(-a/b)
+supply_fun4(P=3,-3,1)  #條件成立，輸出結果
+```
+
+#wrong
+```{r}
+a <- readline(prompt = "請輸入一個數字： ")
+if(a %% 3 == 0) {
+  print("fizz")
+} else if(a %% 5 == 0) {
+  print("buzz")
+} else if(a %% 15 == 0) { #用15的話要放第一個(因為會照順序跑先判斷條件)
+  print("fizzbuzz")
+} else {
+  print("other numbers")
+}
+```
+
+#correct:使用return
+```{r}
+fizzbuzz <- function(input){
+  a <- input %% 3 == 0
+  b <- input %% 5 == 0
+  if(input == a & !b){
+    return("fizz")
+  }
+  else if(input == !a & b){
+    return("buzz")
+  }
+  else if(input == a & b){
+    return("fizzbuzz")
+  }
+}
+
+
+```
+
+#使用print:不管存不存都會印在螢幕上
+```{r}
+fizzbuzz1<-function(x){
+  if(x%%3==0&x%%5!=0){
+    print("fizz")
+  }
+  else if(x%%5==0&x%%3!=0){
+    print("buzz")
+  }
+  else if(x%%5==0&x%%3==0){
+    print("fizzbuzz")
+  }
+  else{
+    print(x)
+  }
+}
+
+fizzbuzz1(3)
+```
+
+#要每個都符合條件:使用all()
+```{r}
+a <- c(1,3,5)
+a>2 # 此邏輯條件產生三個值
+if(a>2) {
+  print("a大於2")
+}
+```
+
+```{r}
+a>2
+all(a>2) #要全部為TRUE才是TRUE
+any(a>2) 
+```
+
+```{r}
+if(all(a>2)){
+  print("a大於2")
+}
+```
+
 
 
 
