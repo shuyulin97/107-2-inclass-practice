@@ -30,8 +30,7 @@ textbookURL <- function(){
 textbookURL()
 ```
 
-#輸出超過一個物件
-
+#輸出超過一個物件:用list
 ```{r}
 library(readr)
 transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
@@ -78,13 +77,109 @@ demand_supply_fun <- function(P, a, b, c, d){
 demand_supply_fun(10,1,8,7,6)
 ```
 
+#條件執行:a<0
+```{r}
+a <- readline(prompt = "請輸入一個數字： ")
+if(a < 0) {
+  print("a為負值")
+}
+```
 
+```{r}
+a<-0
+b<-1
+supply_fun <- function(P,a,b){
+  Qs <- a+b*P
+  return(Qs)
+}
+supply_fun(P=-1,0,1)
+```
 
+```{r}
+supply_fun2 <- function(P,a,b){
+  Qs <- a+b*P
+  if(P>=0) {
+    return(Qs)
+  }
+}
+supply_fun2(P=-1,0,1) #P<0，沒有return值
+supply_fun2(P=2,0,1)
+```
 
+#條件不成立時執行別的(if else)
+```{r}
+a <-  readline(prompt = "請輸入一個數字： ")
+if(a < 0) {
+  print("a為負值") #單純的訊息輸出
+} else {
+  print("a不為負值")
+}
+```
 
+```{r}
+supply_fun3 <- function(P,a,b){
+  Qs <- a+b*P
+  if(P < 0) {
+    message("P不能為負值") # 在螢幕出現的「錯誤」提示，沒有輸出任何值(告訴你錯誤訊息)
+  } else {
+    return(Qs)
+  }
+}
+supply_fun3(P=-1,0,1) #return出錯誤提示
+supply_fun3(P=2,0,1)
+```
 
+```{r}
+gpa_fun <- function(studentID){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+  
+  subSample <- transcriptDataFinal[logiChosenStudent,]
+  
+  sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+  if(studentID %in% transcriptDataFinal$學號){
+  return(GPA)
+  }else{
+      message("查無此學號")
+    }
+}
 
+gpa_fun("92aS67fee") # 顯示82.85276
+gpa_fun("aa829838s") # 查無此學號
+```
 
+#better:1.先判斷學號對不對，不對就不要算，減少運作時間 2.tab內縮，讓排版更易閱讀找錯誤
+```{r}
+gpa_fun <- function(studentID){
+
+  if(studentID %in% transcriptDataFinal$學號){                #先判斷學號
+    transcriptDataFinal$學號==studentID -> logiChosenStudent  #成立再運算
+
+    subSample <- transcriptDataFinal[logiChosenStudent,]
+
+    sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+    return(GPA)
+  } else {
+    message("查無此學號")                                    #不對不要算
+    
+ }
+}
+```
+
+#多個條件判斷
+```{r}
+a <- readline(prompt = "請輸入一個數字： ")
+if(a==1) {
+  print("你輸入了1")
+} else if(a==2) {
+  print("你輸入了2")
+} else if(a==3) {
+  print("你輸入了3")
+} else {
+  print("你輸入了其他數字")
+}
+```
 
 
 
