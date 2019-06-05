@@ -9,22 +9,80 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+utility_cobb_douglass <- function(x,y,.alpha,.beta){
+  utilValue <- x^.alpha*y^.beta # 程序產生output值
+  return(utilValue) # 傳回output值
+}
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+#不指定input名稱:照順序
+utility_cobb_douglass(1,2,0.5,0.8)
+#指定名稱
+utility_cobb_douglass(1,2,.beta=0.8,.alpha=0.5)
+```
+```{r}
+utility_cobb_douglass(y=2,x=1,0.5,0.8)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#iteration
+```{r}
+load(url("https://github.com/tpemartin/github-data/blob/master/loopTranscriptData.Rda?raw=true"))
+```
+
+```{r}
+gpa_fun(transcriptDataFinal$學號[[1]])
+```
+
+```{r}
+studentIds <- unique(transcriptDataFinal$學號)
+studentIds5 <- studentIds[1:5]
+studentIds5
+```
+
+```{r}
+for(i in studentIds5){
+  print(i) # 印出studentIds5[[i]]
+}
+```
+#法1
+```{r}
+for(i in studentIds5){
+  gpa_fun(i)
+  print(gpa_fun(i))
+}
+```
+#法2
+```{r}
+for(i in c(1:5)){
+  print(i)
+  print(studentIds5[[i]])
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
