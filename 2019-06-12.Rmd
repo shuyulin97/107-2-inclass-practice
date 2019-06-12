@@ -1,0 +1,261 @@
+---
+title: "Untitled"
+author: "ShuYu"
+date: "2019年6月12日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+load(url("https://www.dropbox.com/s/duh5aaqgl2f5m3z/loopTranscriptData.Rda?raw=1"))
+studentIds <- unique(transcriptDataFinal$學號) # 全部可能學號
+studentIds5 <- studentIds[1:5] # 前5筆學號
+```
+
+```{r}
+for(i in studentIds5){ 
+  print(i) 
+}
+```
+
+```{r}
+for(i in c(1:5)){ 
+  print(i) 
+}
+```
+```{r}
+for(i in c(1:5)){ 
+  print(studentIds5[[i]]) 
+}
+```
+
+```{r}
+i <- 1
+print(studentIds5[[i]])
+
+for(i in seq_along(studentIds5)){
+  print(studentIds5[[i]])
+}
+```
+
+#example1
+#load gmailadress
+```{r}
+gmailAddress <- c(
+  "tim@gmail.com",
+  "anita",
+  "yellen@gmail.com",
+  "huang@gmail.com"
+)
+```
+
+#沒加 @gmail.com 的信箱地址要加上去
+```{r}
+i <- 2
+print(gmailAddress[[i]])
+
+library(stringr)
+str_c(gmailAddress[[2]], "@gmail.com")
+
+for(i in seq_along(gmailAddress)){
+  if(!(str_detect(gmailAddress[[i]],"@gmali.com"))){
+    gmailAddress[[i]] <- str_c(gmailAddress[[i]],"@gmali.com")
+  }
+}
+
+gmailAddress
+
+```
+
+#example2
+#load commit history
+```{r}
+load(url("https://www.dropbox.com/s/qnz9paigf61yjus/commitHistory.Rda?raw=1"))
+```
+
+#印出 commithistory 裡的author name/committer name/commit date
+```{r}
+for(i in seq_along(commitHistory)){
+  print(commitHistory[[i]]$commit$author$name)
+}
+
+for(i in seq_along(commitHistory)){
+  print(commitHistory[[i]]$commit$committer$name)
+}
+
+for(i in seq_along(commitHistory)){
+  print(commitHistory[[i]]$commit$committer$date)
+}
+
+```
+
+#印出author name = committer name 的邏輯判段
+```{r}
+for(i in seq_along(commitHistory)){
+  (commitHistory[[i]][["commit"]][["author"]][["name"]]==
+     commitHistory[[i]][["commit"]][["committer"]][["name"]]) ->
+    logiResult
+  print(logiResult)  
+}
+```
+
+#印出author name = committer name 的authorname
+```{r}
+for(i in seq_along(commitHistory)){
+  print(commitHistory[[i]]$commit$author$name)
+}
+
+cat("me/n")
+
+for(i in seq_along(commitHistory)){
+  if(commitHistory[[i]]$commit$author$name == commitHistory[[i]]$commit$committer$name){
+    print(commitHistory[[i]]$commit$author$name)
+  }
+}
+
+cat("teacher/n")
+
+for(i in seq_along(commitHistory)){
+  (commitHistory[[i]][["commit"]][["author"]][["name"]]==
+     commitHistory[[i]][["commit"]][["committer"]][["name"]]) ->
+    logiResult
+  print(commitHistory[[i]][["commit"]][["author"]][["name"]][logiResult])  
+}
+```
+
+```{r}
+saveCharacter <- vector("character",5)
+saveCharacter
+
+saveNumeric <- vector("numeric",5)
+saveNumeric
+
+saveLogical <- vector("logical",5)
+saveLogical
+
+saveList <- vector("list",5)
+saveList
+```
+```{r}
+# 把"你好"存在saveCharacter第3個位置
+saveCharacter # 儲存前
+saveCharacter[[3]] <- "你好"
+saveCharacter # 儲存後
+
+# 把 72.3 存在saveNumeric第3個位置
+saveNumeric # 儲存前
+saveNumeric[[3]] <- 72.3
+saveNumeric # 儲存後
+
+# 把 TRUE 存在saveLogical第3個位置
+saveLogical # 儲存前
+saveLogical[[3]] <- TRUE
+saveLogical # 儲存後
+
+# 把 list(姓名="小明",電話="02-86741111") 存在saveList第3個位置
+saveList # 儲存前
+saveList[[3]] <- list(姓名="小明",電話="02-86741111")
+saveList # 儲存後
+```
+
+#將transcriptDataFinal資料中每個學號的平均成績算出來並儲存（使用gpa_fun()）
+```{r}
+studentIds <- unique(transcriptDataFinal$學號) # sequence_source
+saveGPAs <- vector("numeric",length(studentIds)) # saveContainer
+```
+
+#決定儲存容器
+```{r}
+studentIds <- unique(transcriptDataFinal$學號) # sequence_source
+saveGPAs <- vector("numeric",length(studentIds)) # saveContainer
+```
+
+##body
+#資料中[第i個]學號的平均成績算出來並儲存
+```{r}
+i <- 1
+saveGPAs[[i]] <- gpa_ (studentIds[[i]])
+```
+
+#body
+#資料中[第i個]學號的平均成績算出來並儲存
+```{r}
+i <- 1
+
+gpa_fun(studentIds5[[i]]) -> saveGPA5[[i]]
+
+saveGPA5
+```
+
+```{r}
+studentIds <- unique(transcriptDataFinal$學號) # sequence_source
+saveGPAs <- vector("numeric",length(studentIds)) # saveContainer
+for(i in seq_along(studentIds)){
+  saveGPAs[[i]] <- gpa_fun(studentIds[[i]])
+}
+```
+
+
+
+
+#存取 commithistory 裡的author name/committer name/commit date
+
+#儲存容器
+```{r}
+author <- vector("character", length(commitHistory))
+author
+
+committer <- vector("character", length(commitHistory))
+committer
+
+logicdate <- author == committer
+commitDate <- vector("character", length(commitHistory[logicdate]))
+commitDate
+```
+
+
+```{r}
+for(i in seq_along(commitHistory)){
+ author[[i]] <- commitHistory[[i]]$commit$author$name
+}
+author
+
+for(i in seq_along(commitHistory)){
+ committer[[i]] <- commitHistory[[i]]$commit$committer$name
+}
+committer
+
+for(i in seq_along(commitHistory)){
+  commitDate[[i]] <- commitHistory[[i]]$commit$committer$date[logicdate]
+}
+commitDate
+```
+
+
+```{r}
+commitHistory[[1]]$commit$committer$date
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

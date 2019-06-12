@@ -81,11 +81,13 @@ gmailAddress <- c(
 #法1
 ```{r}
 library(stringr)
-for(i in studentIds5){
+for(i in seq_along(gmailAddress)){
   if("@gmail.com" %in% i){
     str_c(i,"@gmail.com")
   }
 }
+
+gmailAddress
 ```
 
 ```{r}
